@@ -203,7 +203,7 @@ function App() {
 
       <hr />
 
-      <h2>Danh sách sinh viên</h2>
+      <h2>Quản lý Danh sách sinh viên</h2>
 
       <ul>
         {students.map((student) => (
