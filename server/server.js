@@ -2,13 +2,32 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const Student = require('./models/Student');
 
 const app = express();
-
 const PORT = process.env.PORT || 5000;
 
+// Cấu hình CORS linh hoạt cho Production (Câu 58)
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      callback(null, true);
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
+
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from Backend' });
 });

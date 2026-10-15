@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+// Khai báo URL Backend trên Render
+const API_BASE_URL = "https://mern-backend-237337-api.onrender.com";
+
 function App() {
   const [students, setStudents] = useState([]);
 
@@ -12,7 +15,7 @@ function App() {
 
   // Lấy danh sách sinh viên
   useEffect(() => {
-    fetch("/api/students")
+    fetch(`${API_BASE_URL}/api/students`)
       .then((response) => response.json())
       .then((data) => {
         setStudents(data);
@@ -29,7 +32,7 @@ function App() {
     try {
       // Nếu đang sửa
       if (editingId) {
-        const response = await fetch(`/api/students/${editingId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/students/${editingId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +62,7 @@ function App() {
         setEditingId(null);
       } else {
         // Nếu đang thêm sinh viên
-        const response = await fetch("/api/students", {
+        const response = await fetch(`${API_BASE_URL}/api/students`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -120,7 +123,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`/api/students/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/students/${id}`, {
         method: "DELETE",
       });
 
@@ -208,8 +211,7 @@ function App() {
       <ul>
         {students.map((student) => (
           <li key={student._id}>
-            <strong>{student.studentId}</strong> - {student.name} -{" "}
-            {student.email}{" "}
+            <strong>{student.studentId}</strong> - {student.name} - {student.email}{" "}
             
             <button onClick={() => handleEdit(student)}>
               Sửa
